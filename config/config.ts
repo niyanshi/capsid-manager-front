@@ -13,7 +13,7 @@ export default defineConfig({
     hmr: true,
   },
   // cdn 配置
-  publicPath: process.env.NODE_ENV === 'production' ? 'http://localhost/8080/' : './',
+  publicPath: process.env.NODE_ENV === 'production' ? './' : './',
   history: {
     type: 'hash',
   },

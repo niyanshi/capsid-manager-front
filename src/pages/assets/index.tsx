@@ -1,9 +1,10 @@
-import React, { useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
+import type { ProFormInstance } from '@ant-design/pro-components';
 import { nanoid, PageContainer } from '@ant-design/pro-components';
 import { ProTable } from '@ant-design/pro-table';
 import type { ProColumns, ActionType } from '@ant-design/pro-table';
 import type { IAssetsItemType } from './types';
-import { httpDownloadZip, httpUpload, httpWearList } from '@/services/api';
+import { httpDownloadZip, httpWearList } from '@/services/api';
 import { Button, Image, message, Upload } from 'antd';
 import { EyeOutlined, UploadOutlined } from '@ant-design/icons';
 import { storage } from '@/utils';
@@ -16,6 +17,11 @@ const AssetsPage: React.FC = () => {
   const [loading, setLoading] = useState('');
 
   const ref = useRef<ActionType>();
+  const formRef = useRef<ProFormInstance>();
+  useEffect(() => {
+    formRef.current?.setFieldValue('status', '0');
+    formRef.current?.submit();
+  }, []);
 
   const columns: ProColumns<IAssetsItemType>[] = [
     {
@@ -31,28 +37,29 @@ const AssetsPage: React.FC = () => {
       title: '用户账户',
       dataIndex: 'account',
     },
-    // {
-    //   title: '上传时间',
-    //   dataIndex: 'uploadTime',
-    //   valueType: 'date',
-    // },
+
     {
       title: '状态',
       dataIndex: 'status',
-      hideInSearch: true,
-      render: (_, records) => {
-        switch (records.status) {
-          case 0:
-            return '待制作';
-          case 1:
-            return '制作中';
-          case 2:
-            return '合成完成';
-          case 3:
-            return 'mint完成';
-          default:
-            return '-';
-        }
+      filters: true,
+      onFilter: true,
+      valueEnum: {
+        0: {
+          text: '制作中',
+          status: 'Processing',
+        },
+        1: {
+          text: '没有合成',
+          status: 'Processing',
+        },
+        2: {
+          text: '合成完成',
+          status: 'Success',
+        },
+        3: {
+          text: 'mint完成',
+          status: 'Success',
+        },
       },
     },
     {
@@ -143,11 +150,6 @@ const AssetsPage: React.FC = () => {
                   setLoading('');
                   return;
                 }
-                // const formData = new FormData();
-                // formData.append('file', info.file.originFileObj!);
-                // const res = await httpUpload(records.id, formData);
-                // console.log(res);
-
                 ref.current?.reload();
                 setLoading('');
                 message.success(`${info.file.name} file uploaded successfully`);
@@ -174,11 +176,13 @@ const AssetsPage: React.FC = () => {
   return (
     <PageContainer>
       <ProTable<IAssetsItemType>
+        formRef={formRef}
         actionRef={ref}
         columns={columns}
         rowKey="id"
         search={{
           labelWidth: 'auto',
+          defaultCollapsed: false,
         }}
         request={async (params) => {
           console.log(params);
@@ -187,6 +191,7 @@ const AssetsPage: React.FC = () => {
             pageSize: params.pageSize,
             username: params.name,
             accountAddress: params.account,
+            status: params.status,
           });
           const { total, records } = res.data;
           const data = records.map((item: any) => {
