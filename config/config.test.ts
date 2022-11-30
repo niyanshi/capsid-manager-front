@@ -3,7 +3,7 @@ import { defineConfig } from 'umi';
 export default defineConfig({
   define: {
     'process.env': {
-      prefix: './api',
+      prefix: 'https://staging-manager-api.capsid.one',
       test: true,
     },
   },
