@@ -31,4 +31,4 @@ http.interceptors.response.use(
 
 export default http;
 
-export const prefix = '/api';
+export const prefix = process.env.prefix;

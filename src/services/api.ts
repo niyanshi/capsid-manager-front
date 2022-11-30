@@ -1,5 +1,5 @@
 import http from './http';
-const prefix = 'https://staging-manager-api.capsid.one';
+const prefix = '/api';
 
 type IParams = Record<string, unknown>;
 type IResponseDto = {

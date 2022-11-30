@@ -45,11 +45,11 @@ const AssetsPage: React.FC = () => {
       onFilter: true,
       valueEnum: {
         0: {
-          text: '制作中',
+          text: '没有合成',
           status: 'Processing',
         },
         1: {
-          text: '没有合成',
+          text: '制作中',
           status: 'Processing',
         },
         2: {
@@ -132,17 +132,15 @@ const AssetsPage: React.FC = () => {
         return (
           <Upload
             name="file"
-            action={`${location.origin}/api/wear/upload?id=${records.id}`}
+            action={`${process.env.prefix}/wear/upload?id=${records.id}`}
             accept="image/jpg,image/png"
             headers={{ Authorization: `Bearer${storage.getToken()}` }}
             showUploadList={false}
             onChange={async (info) => {
               setLoading(records.id);
               if (info.file.status !== 'uploading') {
-                console.log(info.file, info.fileList);
               }
               if (info.file.status === 'done') {
-                console.log(info.file.response);
                 const res = info.file.response;
                 if (res.code !== 0) {
                   message.error(res.msg);
@@ -185,7 +183,6 @@ const AssetsPage: React.FC = () => {
           defaultCollapsed: false,
         }}
         request={async (params) => {
-          console.log(params);
           const res = await httpWearList({
             pageNum: params.current,
             pageSize: params.pageSize,
@@ -214,25 +211,27 @@ const AssetsPage: React.FC = () => {
       />
 
       {/* 资源预览 */}
-      <Image.PreviewGroup
-        preview={{
-          visible: assetsListVisible,
-          onVisibleChange: (val) => setAssertsVisible(val),
-        }}
-      >
-        {assetsList.map((item) => (
-          <Image key={nanoid()} width={200} src={item} />
-        ))}
-      </Image.PreviewGroup>
+      <div style={{ display: 'none' }}>
+        <Image.PreviewGroup
+          preview={{
+            visible: assetsListVisible,
+            onVisibleChange: (val) => setAssertsVisible(val),
+          }}
+        >
+          {assetsList.map((item) => (
+            <Image key={nanoid()} width={200} src={item} />
+          ))}
+        </Image.PreviewGroup>
 
-      {/* 合成照预览 */}
-      <Image
-        preview={{
-          src: compositeImage,
-          visible: compositeImageVisible,
-          onVisibleChange: (val) => setCompositeImageVisible(val),
-        }}
-      />
+        {/* 合成照预览 */}
+        <Image
+          preview={{
+            src: compositeImage,
+            visible: compositeImageVisible,
+            onVisibleChange: (val) => setCompositeImageVisible(val),
+          }}
+        />
+      </div>
     </PageContainer>
   );
 };

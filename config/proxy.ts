@@ -12,8 +12,7 @@ export default {
     '/api': {
       // 要代理的地址
       // target: 'http://172.100.3.188:9091/',
-      // target: 'http://127.0.0.1:8008/',
-      // target: 'https://staging-manager-api.capsid.one/',
+      target: 'http://172.100.3.144:9081/',
       // 配置了这个可以从 http 代理到 https
       changeOrigin: true,
       pathRewrite: { '^/api': '' },

@@ -27,7 +27,6 @@ export async function getInitialState(): Promise<{
   const fetchUserInfo = async () => {
     try {
       const res = await httpGetCurrentUser();
-      console.log({ res });
       return {
         name: res.data.phone,
         avatar: 'https://gw.alipayobjects.com/zos/antfincdn/XAosXuNZyF/BiazfanxmamNRoxxVxka.png',
