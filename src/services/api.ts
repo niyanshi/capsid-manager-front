@@ -1,4 +1,4 @@
-import http, {prefix} from './http';
+import http, { prefix } from './http';
 
 type IParams = Record<string, unknown>;
 type IResponseDto = {
@@ -14,7 +14,7 @@ export const httpLogin = async (data: IParams): Promise<IResponseDto> => {
   formData.append('password', data.password as string);
 
   const res = await http.post(`${prefix}/v1/password_login`, formData, {
-    headers: {'Content-Type': 'multipart/form-data'},
+    headers: { 'Content-Type': 'multipart/form-data' },
   });
   return res.data;
 };
@@ -28,7 +28,7 @@ export const httpGetCurrentUser = async (): Promise<IResponseDto> => {
 /** 获取wear列表 */
 export const httpWearList = async (data: IParams): Promise<IResponseDto> => {
   const res = await http.get(`${prefix}/wear`, {
-    params: {...data},
+    params: { ...data },
   });
   return res.data;
 };
@@ -36,7 +36,7 @@ export const httpWearList = async (data: IParams): Promise<IResponseDto> => {
 /**下载接口 */
 export const httpDownloadZip = async (data: IParams) => {
   const res = await http.get(`${prefix}/wear/downloadZip`, {
-    params: {...data},
+    params: { ...data },
     responseType: 'blob',
   });
   const blob = new Blob([res.data]);
@@ -54,8 +54,8 @@ export const httpDownloadZip = async (data: IParams) => {
 /** 上传图片接口 */
 export const httpUpload = async (id: string, data: FormData) => {
   const res = await http.post(`${prefix}/wear/upload`, data, {
-    params: {id},
-    headers: {'Content-Type': 'multipart/form-data'},
+    params: { id },
+    headers: { 'Content-Type': 'multipart/form-data' },
   });
   return res.data;
 };
