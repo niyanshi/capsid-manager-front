@@ -44,20 +44,16 @@ const AssetsPage: React.FC = () => {
       filters: true,
       onFilter: true,
       valueEnum: {
-        0: {
-          text: '没有合成',
-          status: 'Processing',
-        },
-        1: {
-          text: '制作中',
-          status: 'Processing',
-        },
         2: {
-          text: '合成完成',
-          status: 'Success',
+          text: '待合成',
+          status: 'Processing',
         },
         3: {
-          text: 'mint完成',
+          text: '合成中',
+          status: 'Processing',
+        },
+        4: {
+          text: '合成完成',
           status: 'Success',
         },
       },
