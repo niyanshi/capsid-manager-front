@@ -19,7 +19,7 @@ const AssetsPage: React.FC = () => {
   const ref = useRef<ActionType>();
   const formRef = useRef<ProFormInstance>();
   useEffect(() => {
-    formRef.current?.setFieldValue('status', '0');
+    formRef.current?.setFieldValue('status', '2');
     formRef.current?.submit();
   }, []);
 
@@ -194,7 +194,10 @@ const AssetsPage: React.FC = () => {
               name: item.username,
               account: item.accountAddress,
               status: item.status,
-              uploadImage: [item.parentPic1, item.parentPic2],
+              uploadImage: [
+                item.parentPic1,
+                item.parent2Type === 1 ? item.parentPic2 : item.avatarPic,
+              ],
               compositeImage: item.wearMeta.image || '',
               createTime: item.createTime,
             } as IAssetsItemType;
