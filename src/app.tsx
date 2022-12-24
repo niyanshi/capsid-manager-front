@@ -1,7 +1,7 @@
 // import Footer from '@/components/Footer';
 import RightContent from '@/components/RightContent';
 import type { Settings as LayoutSettings } from '@ant-design/pro-components';
-import { PageLoading } from '@ant-design/pro-components';
+import PageLoading from '@/pages/PageLoading';
 import type { RunTimeLayoutConfig } from 'umi';
 import { history } from 'umi';
 import defaultSettings from '../config/defaultSettings';
@@ -52,6 +52,7 @@ export async function getInitialState(): Promise<{
 }
 
 // ProLayout 支持的api https://procomponents.ant.design/components/layout
+// @ts-ignore
 export const layout: RunTimeLayoutConfig = ({ initialState }) => {
   return {
     rightContentRender: () => <RightContent />,
@@ -77,6 +78,7 @@ export const layout: RunTimeLayoutConfig = ({ initialState }) => {
       if (initialState?.loading) return <PageLoading />;
       return <>{children}</>;
     },
+    PageLoading: <PageLoading />,
     ...initialState?.settings,
   };
 };

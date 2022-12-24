@@ -37,6 +37,11 @@ const AssetsPage: React.FC = () => {
       title: '用户账户',
       dataIndex: 'account',
     },
+    {
+      title: 'discord账号 ',
+      dataIndex: 'discord',
+      hideInSearch: true,
+    },
 
     {
       title: '状态',
@@ -200,6 +205,7 @@ const AssetsPage: React.FC = () => {
               ],
               compositeImage: item.wearMeta.image || '',
               createTime: item.createTime,
+              discord: item.discord,
             } as IAssetsItemType;
           });
           return {

@@ -23,9 +23,9 @@ export default defineConfig({
     ...defaultSettings,
   },
   // https://umijs.org/zh-CN/plugins/plugin-locale
-  dynamicImport: {
-    loading: '@ant-design/pro-layout/es/PageLoading',
-  },
+  // dynamicImport: {
+  //   loading: '@/pages/PageLoading.tsx',
+  // },
   targets: {
     ie: 11,
   },
